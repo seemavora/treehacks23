@@ -1,10 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import AppNavigator from './navigation/AppNavigator'
+import { NavigationContainer } from "@react-navigation/native";
+import FriendInvite from './pages/FriendInvite'
 
+// const goFriendPressed = () => {
+//   this.props.navigation.navigate("FriendInvite");
+// };
 export default function App() {
+  
   return (
+
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <NavigationContainer>
+      <AppNavigator />
+      {/* <HomeScreen/> */}
+      </NavigationContainer>
+     
       <StatusBar style="auto" />
     </View>
   );
@@ -18,3 +30,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+// const HomeScreen = ({navigation}) => {
+//   return (
+//     <Button
+//       title="Go to Jane's profile"
+//       onPress={() =>
+//         navigation.navigate('Profile', {name: 'Jane'})
+//       }
+//     />
+//   );
+// };
