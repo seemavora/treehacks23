@@ -1,21 +1,14 @@
 import React from "react";
-import { View, Image, Platform, Button } from "react-native";
-
-goFriendPressed = () => {
-    // this.props.navigation.navigate("FrontPage");
-};
+import { View, Image, Platform, Button, Text } from "react-native";
 
 class FriendInvite extends React.Component {
-    render() {
-        return (
-            <View>
-                <Button
-                    onPress={goFriendPressed}
-                    title="Learn More"
-                    color="#841584"
-                />
-            </View>
-        );
-    }
+	render() {
+		return (
+			<View>
+				<Text>frferfgergfer</Text>
+
+			</View>
+		);
+	}
 }
 export default FriendInvite;
