@@ -5,9 +5,12 @@ import { Audio } from 'expo-av'
 
 export default function App() {
   const [started, setStarted] = useState(false)
-  // const [results, setResults] = useState([])
-  // let recording = new Audio.Recording()
-  const [recording, setRecording] = useState()
+  const [results, setResults] = useState([])
+  let recording = new Audio.Recording()
+  // const [recording, setRecording] = useState()
+  // const AudioRecorder = useRef(new Audio.Recording())
+  // const AUdioPlayer = userRef(new Audio.Sound())
+  
   const [recordings, setRecordings] = useState([])
 
   useEffect(() => {
@@ -29,10 +32,10 @@ export default function App() {
           playsInSilentModeIOS: true
         })
 
-        await recording.prepareToRecordAsync(
-          Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
-        );
-        await recording.startAsync();
+        const recording = new Audio.Recording();
+        await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+        await recording.startAsync(); 
+        setRecording(recording);
         setStarted(true)
       } else {
         setMessage('perms not granted')
@@ -46,25 +49,20 @@ export default function App() {
   const stopRecording = async () => {
     // setRecording(undefined)
     setStarted(false)
-    const { s } = await recording.getStatusAsync();
-    console.log(s)
 
     try {
       await recording.stopAndUnloadAsync()
       const uri = recording.getURI()
-      console.log(uri)
+      console.log(uri, '???')
     } catch (e) {
+      console.log(e)
       // if (e.message.includes("Un")) {
       //   await Audio.unloadAudioRecorder();
       //   await recording._cleanupForUnloadedRecorder({durationMillis: 0});
       // } else {
       //   await handleError(e, {userMessage: "An error occurred stopping the recording."});
       // }
-    } finally {
-      recording = undefined;
-      // timerStop();
-      success = true;
-    }
+    } 
     let updatedRecordings = [...recordings];
     const { sound, status } = recording.createdNewLoadedSoundAsync()
     updatedRecordings.push({
