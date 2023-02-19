@@ -15,9 +15,6 @@ class FrontPage extends React.Component {
 
 		return (
 			<View>
-				<Text>
-					HEY
-				</Text>
 				<Button
 					onPress={this.goFriendPressed}
 					title="Learn More"
