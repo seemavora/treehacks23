@@ -45,39 +45,41 @@ class FrontPage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.goBookingPressed = this.goBookingPressed.bind(this);
-        // this.goGiftPressed = this.goGiftPressed.bind(this);
-        // this.goHelpPressed = this.goHelpPressed.bind(this);
+		// this.goGiftPressed = this.goGiftPressed.bind(this);
+		// this.goHelpPressed = this.goHelpPressed.bind(this);
 	}
- 
+
 	goBookingPressed = () => {
 		this.props.navigation.navigate("FriendInvite");
 	};
 
-    goGiftPressed = () => {
+	goGiftPressed = () => {
 		Alert.alert('send gift to?', 'based on your selection a trip vouchers will be sent.', [
-            {
-              text: 'Mom',
-            onPress: () => Communication.phonecall('14087074456', true),
-            style: 'cancel',
-            },
-            {text: 'Dad', 
-            onPress: () => Communication.phonecall('15103098997', true),
-        },
-          ]);
+			{
+				text: 'Mom',
+				onPress: () => Communication.phonecall('14087074456', true),
+				style: 'cancel',
+			},
+			{
+				text: 'Dad',
+				onPress: () => Communication.phonecall('15103098997', true),
+			},
+		]);
 	};
 
-    goHelpPressed = () => {
-        Alert.alert('are you sure you want to file a help ticket?', '', [
-            {
-              text: 'Yes',
-              onPress: () => Communication.text('4087074456','I am in trouble, please send help.'),   
-            },
-            {text: 'No', 
-            onPress: () => console.log('cancelled request'),
-            style: 'cancel',
-        },
-          ]);
-	
+	goHelpPressed = () => {
+		Alert.alert('are you sure you want to file a help ticket?', '', [
+			{
+				text: 'Yes',
+				onPress: () => Communication.text('4087074456', 'I am in trouble, please send help.'),
+			},
+			{
+				text: 'No',
+				onPress: () => console.log('cancelled request'),
+				style: 'cancel',
+			},
+		]);
+
 	};
 	render() {
 
@@ -97,12 +99,41 @@ class FrontPage extends React.Component {
 					<TouchableOpacity style={[this.state.index === 3 ? styles.selectedButton : styles.featureButton]} onPress={this.goHelpPressed}>
 						<Text style={styles.textFrontpage}><Icon name="question-circle" size={20} color='black' />  help + support </Text>
 					</TouchableOpacity>
+					{/* <TouchableOpacity
+						onPress={this.goHelpPressed}
+						style={styles.roundButton1}>
+						<Text style={styles.textFrontpage}><Icon name="phone" size={20} color='black' /></Text>
+					</TouchableOpacity> */}
+					{/* <TouchableOpacity
+						onPress={this.goHelpPressed}
+						style={styles.roundButton1}>
+						<Text style={styles.textFrontpage}><Icon name="phone-alt" size={20} color='black' /></Text>
+					</TouchableOpacity> */}
 				</View>
 			</View>
 		);
 	}
 }
 const styles = StyleSheet.create({
+
+	roundButton1: {
+		width: 50,
+		height: 50,
+		justifyContent: 'center',
+		alignItems: 'center',
+		padding: 10,
+		borderRadius: 100,
+		backgroundColor: 'red',
+	  },
+	  roundButton1: {
+		width: 50,
+		height: 50,
+		justifyContent: 'center',
+		alignItems: 'center',
+		padding: 10,
+		borderRadius: 100,
+		backgroundColor: 'green',
+	  },
 	fpBackground: {
 		width: "100%",
 		height: "100%",
@@ -123,13 +154,13 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 
 	},
-    step:{
-        textAlign: "center",
-        fontWeight: "100",
+	step: {
+		textAlign: "center",
+		fontWeight: "100",
 		color: "black",
-        marginRight: "10%",
+		marginRight: "10%",
 		fontSize: 30
-    },
+	},
 	topText: {
 		fontWeight: "190",
 		color: "black",
@@ -152,7 +183,7 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: 15,
 		fontWeight: "400",
-        
+
 	},
 	featureButton: {
 		height: Dimensions.get("window").height * .1,
@@ -166,7 +197,7 @@ const styles = StyleSheet.create({
 		shadowOffset: { height: 6, width: 4 }, // IOS
 		shadowOpacity: .1, // IOS
 		shadowRadius: 2, //IOS
-        borderRadius:5,
+		borderRadius: 5,
 		fontFamily: (Platform.OS === "ios") ? "Avenir-Medium" : "serif"
 	},
 	selectedButton: {
