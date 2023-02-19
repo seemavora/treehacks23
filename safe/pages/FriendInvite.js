@@ -11,7 +11,7 @@ export default function FriendInvite() {
 	const { Configuration, OpenAIApi } = require("openai");
 
 	const configuration = new Configuration({
-		apiKey: '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',
+		apiKey: '',
 	});
 	const openai = new OpenAIApi(configuration);
 	const [result, setResult] = React.useState("");
