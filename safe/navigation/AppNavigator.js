@@ -10,12 +10,12 @@ class AppNavigator extends React.Component {
     return (
       <Stack.Navigator initialRouteName="FrontPage">
         <Stack.Screen
-          name="FrontPage"
+          name="Home"
           component={FrontPage}
 
         />
         <Stack.Screen
-          name="FriendInvite"
+          name="Test"
           component={FriendInvite}
         />
       </Stack.Navigator>
