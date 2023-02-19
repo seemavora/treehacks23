@@ -1,16 +1,17 @@
 import React from "react";
-import { View, Image, Platform, Button, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, Platform, Button, Text, TouchableOpacity } from "react-native";
 import { Configuration, OpenAIApi } from "openai";
 import "react-native-url-polyfill/auto";
 import { Audio } from 'expo-av';
 import * as Speech from 'expo-speech';
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 // console.log("we are here", configuration);
 export default function FriendInvite() {
 	const { Configuration, OpenAIApi } = require("openai");
 
 	const configuration = new Configuration({
-		apiKey: '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',
+		apiKey: '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',
 	});
 	const openai = new OpenAIApi(configuration);
 	const [result, setResult] = React.useState("");
@@ -19,22 +20,20 @@ export default function FriendInvite() {
 	const options = {
 		voice: "com.apple.speech.synthesis.voice.Fred",
 		pitch: 1.5,
-		rate: 0.7
+		rate: 0.5
 	};
 
+	var questionList = ["What are you doing?", "How is that going?", "Nice, I am um glad to hear that, I am also hungry", "I am 10 minutes away. Are you are home?"]
+	var answerList = ["Working on some meetings and tasks", "Very interesting, doing cs tasks and meeting many people", "Yes, me too. I can make some italian food and drinks", "Sure, um yeah of course. I will cook right now, bye"]
 	function sleep() {
-		return new Promise(resolve => setTimeout(resolve, 5000));
+		return new Promise(resolve => setTimeout(resolve, 10000));
 	}
-
-	var questionList = ["What have you been up to?", "How is that going?", "I am also super hungry. Can you make some pasta?", "Sounds good. Are you at home? I am 10 minutes away"]
-	var answerList = ["Just doing household chores and cleaning and grocery", "Its fun but I am getting kind of hungry and sleepy", "Yeah, I would absolutely love that. I will even make some garlic bread", "Yes, I am at home. See you!"]
-
 	const response = async () => {
-
+		sleep()
 		try {
 			for (var i = 0; i < questionList.length; i++) {
 				var curPrompt = questionList[i] + "\n" + answerList[i]
-				console.log("curPrompt", curPrompt)
+				// console.log("curPrompt", curPrompt)
 				const res = await openai.createCompletion({
 					model: "text-davinci-003",
 					prompt: curPrompt,
@@ -47,8 +46,7 @@ export default function FriendInvite() {
 
 				})
 				setResult(res);
-				sleep()
-				console.log("printing the res", res.data.choices[0]["text"]);
+				//console.log("printing the res", res.data.choices[0]["text"]);
 				speakGreeting(res.data.choices[0]["text"])
 			}
 
@@ -80,12 +78,53 @@ export default function FriendInvite() {
 	//     }
 	// };
 	return (
-		<View>
-			<TouchableOpacity onPress={response}>
-				<Text>Speak</Text>
-			</TouchableOpacity>
-			<Text>result</Text>
+		<View style={styles.fpBackground}>
+			<View style={styles.infoContainer}>
+				<Text style={{ color: "white", fontSize: 15 }}>Click button to contact customer service</Text>
+				<TouchableOpacity
+					onPress={response}
+					style={styles.roundButton1}>
+					<Text style={styles.textFrontpage}><Icon name="phone-alt" size={20} color='white' /></Text>
+				</TouchableOpacity>
 
+			</View>
 		</View>
 	)
 }
+
+const styles = StyleSheet.create({
+
+	roundButton1: {
+		width: 50,
+		height: 50,
+		justifyContent: 'center',
+		alignItems: 'center',
+		padding: 10,
+		borderRadius: 100,
+		backgroundColor: 'red',
+		marginLeft: "30%",
+		marginTop: "10%"
+	},
+	textFrontPage: {
+		fontSize: 25,
+		fontWeight: "200",
+		color: "white",
+		fontFamily: (Platform.OS === "ios") ? "Avenir-Medium" : "serif"
+	},
+	fpBackground: {
+		width: "100%",
+		height: "100%",
+		backgroundColor: "#055C9D",
+		color: "white",
+
+	},
+	infoContainer: {
+		textAlign: "center",
+		marginTop: "70%",
+		marginLeft: "15%",
+		width: "100%",
+		backgroundColor: "#055C9D",
+		color: "white",
+
+	},
+});
