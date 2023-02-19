@@ -1,15 +1,19 @@
 import React, { useState, useRef } from "react";
 import { View, StyleSheet, Button, Text } from "react-native";
 import { Audio } from "expo-av";
+import * as FileSystem from 'expo-file-system';
+import axios from 'axios'
 
 export default function App() {
 
   const AudioRecorder = useRef(new Audio.Recording());
   const AudioPlayer = useRef(new Audio.Sound());
 
-  const [audioURI, setAudioURI] = useState("");
-  const [isRecording, setIsRecording] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioURI, setAudioURI] = useState('')
+  const [isRecording, setIsRecording] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isFetching, setIsFetching] = useState(false)
+  const [transcript, setTranscript] = useState('')
 
   const startRecording = async () => {
     const permission = await Audio.requestPermissionsAsync();
@@ -42,6 +46,7 @@ export default function App() {
     } catch (error) { 
       console.log(error)
     }
+    getTranscription() //TODO move
   }
 
   const playRecording = async () => {
@@ -71,6 +76,41 @@ export default function App() {
     }
   }
 
+  const getTranscription = async () => {
+    setIsFetching(true)
+    try {
+      const  { uri }  = await FileSystem.getInfoAsync(audioURI)
+      const formData = new FormData()
+      formData.append('file', {
+        // uri: Platform.OS === 'android' ? uri: uri.replace('file://', ''),
+        uri,
+        type: Platform.OS === 'ios' ? 'audio/x-wav' : 'audio/m4a',
+        name: Platform.OS === 'ios' ? `${Date.now()}.wav` :`${Date.now()}.m4a`,
+      })
+
+      const { data } = await axios.post('https://localhost:3005/speech', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }).then(res => console.log('rr'))
+      .catch(err => console.log(JSON.stringify(err), 'what'))
+      setTranscript(data.transcript)
+
+    } catch(error) {
+      console.log('error reading file',error)
+    }
+    setIsFetching(false)
+  }
+
+  const deleteRecordingFile = async() => {
+    try {
+      const info = await FileSystem.getInfoAsync(audioURI)
+      await FileSystem.deleteAsync(info.uri)
+    } catch(err) {
+
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Button
@@ -84,6 +124,9 @@ export default function App() {
         onPress={isPlaying ? stopPlaying : playRecording}
       />
       <Text>{audioURI}</Text>
+      <Text>
+        {transcript}
+      </Text>
     </View>
   );
 }
