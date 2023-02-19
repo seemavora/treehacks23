@@ -8,25 +8,28 @@ import FriendInvite from './pages/FriendInvite'
 //   this.props.navigation.navigate("FriendInvite");
 // };
 export default function App() {
-  
-  return (
 
-    <View style={styles.container}>
-      <NavigationContainer>
-      <AppNavigator />
-      {/* <HomeScreen/> */}
-      </NavigationContainer>
-     
-      <StatusBar style="auto" />
-    </View>
-  );
+	return (
+
+		<View style={styles.container}>
+			<NavigationContainer>
+				<AppNavigator />
+				{/* <HomeScreen/> */}
+			</NavigationContainer>
+
+			<StatusBar style="auto" />
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: '#fff',
-  },
+	container: {
+		flex: 1,
+		backgroundColor: 'white',
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
+	},
 });
 
 // const HomeScreen = ({navigation}) => {
