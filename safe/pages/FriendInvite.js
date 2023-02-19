@@ -11,7 +11,7 @@ export default function FriendInvite() {
 	const { Configuration, OpenAIApi } = require("openai");
 
 	const configuration = new Configuration({
-		apiKey: '',
+		apiKey: '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',
 	});
 	const openai = new OpenAIApi(configuration);
 	const [result, setResult] = React.useState("");
@@ -25,11 +25,13 @@ export default function FriendInvite() {
 
 	var questionList = ["What are you doing?", "How is that going?", "Nice, I am um glad to hear that, I am also hungry", "I am 10 minutes away. Are you are home?"]
 	var answerList = ["Working on some meetings and tasks", "Very interesting, doing cs tasks and meeting many people", "Yes, me too. I can make some italian food and drinks", "Sure, um yeah of course. I will cook right now, bye"]
-	function sleep() {
-		return new Promise(resolve => setTimeout(resolve, 10000));
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 	const response = async () => {
-		sleep()
+		console.log("Sarah")
+		speakGreeting("Hello Sarah")
+		sleep(7000)
 		try {
 			for (var i = 0; i < questionList.length; i++) {
 				var curPrompt = questionList[i] + "\n" + answerList[i]
