@@ -15,7 +15,7 @@ class AppNavigator extends React.Component {
 
 				/>
 				<Stack.Screen
-					name="Test"
+					name="Friend Invite"
 					component={FriendInvite}
 				/>
 			</Stack.Navigator>

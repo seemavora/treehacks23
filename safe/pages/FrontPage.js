@@ -1,8 +1,41 @@
 import React from "react";
-import { View, Text, Button, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, Text, Button, TouchableOpacity, StyleSheet, Dimensions, Alert } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import Communication from 'react-native-communications';
+// import SendSMS from 'react-native-sms';
+// const [mobileNumber, setMobileNumber] = useState('4087074456');
+// const [bodySMS, setBodySMS] = useState(
+//   'Please follow https://aboutreact.com',
+// );
 // import styles from './styles';
+// const initiateSMS = () => {
+//     // Check for perfect 10 digit length
+//     if (mobileNumber.length != 10) {
+//       alert('Please insert correct contact number');
+//       return;
+//     }
 
+//     SendSMS.send(
+//       {
+//         // Message body
+//         body: 'testing123',
+//         // Recipients Number
+//         recipients: [4087074456],
+//         // An array of types 
+//         // "completed" response when using android
+//         successTypes: ['sent', 'queued'],
+//       },
+//       (completed, cancelled, error) => {
+//         if (completed) {
+//             console.log('SMS Sent Completed');
+//           } else if (cancelled) {
+//             console.log('SMS Sent Cancelled');
+//           } else if (error) {
+//             console.log('Some error occured');
+//           }
+//       },
+//     );
+//   };
 class FrontPage extends React.Component {
 	state = {
 		index: 0,
@@ -11,11 +44,40 @@ class FrontPage extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.goFriendPressed = this.goFriendPressed.bind(this);
-
+		this.goBookingPressed = this.goBookingPressed.bind(this);
+        // this.goGiftPressed = this.goGiftPressed.bind(this);
+        // this.goHelpPressed = this.goHelpPressed.bind(this);
 	}
-	goFriendPressed = () => {
+ 
+	goBookingPressed = () => {
 		this.props.navigation.navigate("FriendInvite");
+	};
+
+    goGiftPressed = () => {
+		Alert.alert('send gift to?', 'based on your selection a trip vouchers will be sent.', [
+            {
+              text: 'Mom',
+            onPress: () => Communication.phonecall('14087074456', true),
+            style: 'cancel',
+            },
+            {text: 'Dad', 
+            onPress: () => Communication.phonecall('15103098997', true),
+        },
+          ]);
+	};
+
+    goHelpPressed = () => {
+        Alert.alert('are you sure you want to file a help ticket?', '', [
+            {
+              text: 'Yes',
+              onPress: () => Communication.text('4087074456','I am in trouble, please send help.'),   
+            },
+            {text: 'No', 
+            onPress: () => console.log('cancelled request'),
+            style: 'cancel',
+        },
+          ]);
+	
 	};
 	render() {
 
@@ -26,13 +88,13 @@ class FrontPage extends React.Component {
 					<Text style={styles.step}>book instantaneously</Text>
 				</View>
 				<View style={styles.featureGroup}>
-					<TouchableOpacity style={[this.state.index === 1 ? styles.selectedButton : styles.featureButton]} onPress={this.setFriendButton}>
+					<TouchableOpacity style={[this.state.index === 1 ? styles.selectedButton : styles.featureButton]} onPress={this.goBookingPressed}>
 						<Text style={styles.textFrontpage}><Icon name="paper-plane" size={20} color='black' />  submit a booking request </Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={[this.state.index === 2 ? styles.selectedButton : styles.featureButton]} onPress={this.setStudyButton}>
+					<TouchableOpacity style={[this.state.index === 2 ? styles.selectedButton : styles.featureButton]} onPress={this.goGiftPressed}>
 						<Text style={styles.textFrontpage}><Icon name="gem" size={20} color='black' />  gift a friend </Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={[this.state.index === 3 ? styles.selectedButton : styles.featureButton]} onPress={this.setStudyButton}>
+					<TouchableOpacity style={[this.state.index === 3 ? styles.selectedButton : styles.featureButton]} onPress={this.goHelpPressed}>
 						<Text style={styles.textFrontpage}><Icon name="question-circle" size={20} color='black' />  help + support </Text>
 					</TouchableOpacity>
 				</View>
