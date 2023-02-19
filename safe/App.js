@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import AppNavigator from './navigation/AppNavigator'
 import { NavigationContainer } from "@react-navigation/native";
 import FriendInvite from './pages/FriendInvite'
-
+import React, { useState, useEffect } from 'react';
 // const goFriendPressed = () => {
 //   this.props.navigation.navigate("FriendInvite");
 // };
