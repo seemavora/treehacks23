@@ -61,12 +61,45 @@ export default function App() {
       const uri = AudioRecorder.current.getURI();
       if (uri) 
         setAudioURI(uri);
+      console.log(uri);
       AudioRecorder.current = new Audio.Recording();
+      setIsFetching(true)
+      try {
+        // setAudioURI(audioURI.replace('file://', ''))
+        //const  { uri }  = await FileSystem.getInfoAsync(audioURI)
+        const formData = new FormData()
+        formData.append('title','just testing')
+        formData.append('file', {
+          AudioRecorder,
+          type: Platform.OS === 'ios' ? 'audio/x-wav' : 'audio/m4a',
+          name: Platform.OS === 'ios' ? `${Date.now()}.wav` :`${Date.now()}.m4a`,
+        })
+        console.log(JSON.stringify(formData))
+
+        const { data } = await axios.post('http://localhost:3005/speech',formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+        }).then(res => console.log(res, 'rr'))
+        .catch(err => console.log(JSON.stringify(err), 'what\n\n'))
+
+        // const {data} = await axios.post('https://localhost:3005/speech', 'itsme', {
+            
+        //   }).then(res => console.log('rr'))
+        //   .catch(err => console.log(JSON.stringify(err), 'what'))
+
+        setTranscript(data.transcript)
+
+      } catch(error) {
+        console.log('error reading file',error)
+      }
+      setIsFetching(false)
       setIsRecording(false);
     } catch (error) { 
       console.log(error)
     }
-    getTranscription() //TODO move
+    
   }
 
   const playRecording = async () => {
@@ -97,39 +130,7 @@ export default function App() {
   }
 
   const getTranscription = async () => {
-    setIsFetching(true)
-    try {
-      // setAudioURI(audioURI.replace('file://', ''))
-      const  { uri }  = await FileSystem.getInfoAsync(audioURI)
-      const formData = new FormData()
-      formData.append('title','just testing')
-      formData.append('file', {
-        uri,
-        type: Platform.OS === 'ios' ? 'audio/x-wav' : 'audio/m4a',
-        name: Platform.OS === 'ios' ? `${Date.now()}.wav` :`${Date.now()}.m4a`,
-      })
-      console.log(JSON.stringify(formData))
-
-      const { data } = await axios.post('https://localhost:3005/speech',formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
-          transformRequest: formData => formData
-      }).then(res => console.log(res, 'rr'))
-      .catch(err => console.log(JSON.stringify(err), 'what'))
-
-      // const {data} = await axios.post('https://localhost:3005/speech', 'itsme', {
-          
-      //   }).then(res => console.log('rr'))
-      //   .catch(err => console.log(JSON.stringify(err), 'what'))
-
-      setTranscript(data.transcript)
-
-    } catch(error) {
-      console.log('error reading file',error)
-    }
-    setIsFetching(false)
+    
   }
 
   const deleteRecordingFile = async() => {
