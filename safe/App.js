@@ -88,12 +88,18 @@ export default function App() {
         name: Platform.OS === 'ios' ? `${Date.now()}.wav` :`${Date.now()}.m4a`,
       })
 
-      const { data } = await axios.post('https://localhost:3005/speech', formData, {
+      const { data } = await axios.post('http://localhost:3005/speech', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       }).then(res => console.log('rr'))
       .catch(err => console.log(JSON.stringify(err), 'what'))
+
+      // const {data} = await axios.post('https://localhost:3005/speech', 'itsme', {
+          
+      //   }).then(res => console.log('rr'))
+      //   .catch(err => console.log(JSON.stringify(err), 'what'))
+
       setTranscript(data.transcript)
 
     } catch(error) {
