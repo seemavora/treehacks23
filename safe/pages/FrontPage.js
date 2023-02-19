@@ -22,18 +22,18 @@ class FrontPage extends React.Component {
 		return (
 			<View style={styles.fpBackground}>
 				<View style={styles.titles}>
-					<Text style={styles.topText}>Choose one!</Text>
-					<Text style={styles.step}>Select a Feature</Text>
+					<Text style={styles.topText}>make local bookings! ✈️ </Text>
+					<Text style={styles.step}>book instantaneously</Text>
 				</View>
 				<View style={styles.featureGroup}>
 					<TouchableOpacity style={[this.state.index === 1 ? styles.selectedButton : styles.featureButton]} onPress={this.setFriendButton}>
-						<Text style={styles.textFrontpage}><Icon name="users" size={20} color='black' />  Submit Text Request for Tickets</Text>
+						<Text style={styles.textFrontpage}><Icon name="paper-plane" size={20} color='black' />  submit a booking request </Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={[this.state.index === 2 ? styles.selectedButton : styles.featureButton]} onPress={this.setStudyButton}>
-						<Text style={styles.textFrontpage}><Icon name="book" size={20} color='black' />  Gift to Friend </Text>
+						<Text style={styles.textFrontpage}><Icon name="gem" size={20} color='black' />  gift a friend </Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={[this.state.index === 3 ? styles.selectedButton : styles.featureButton]} onPress={this.setStudyButton}>
-						<Text style={styles.textFrontpage}><Icon name="book" size={20} color='black' />  Help + Support </Text>
+						<Text style={styles.textFrontpage}><Icon name="question-circle" size={20} color='black' />  help + support </Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -44,39 +44,44 @@ const styles = StyleSheet.create({
 	fpBackground: {
 		width: "100%",
 		height: "100%",
-		backgroundColor: "orange",
+		backgroundColor: "#fff",
 	},
 	buttonGroup: {
 		marginTop: '50%',
 		alignSelf: "flex-end",
 		bottom: 20,
 		right: 15,
-		backgroundColor: "blue",
+		backgroundColor: "#b7e4ff",
 
 	},
 	titles: {
 		textAlign: "center",
 		marginTop: "20%",
 		width: "100%",
-		backgroundColor: "blue",
+		backgroundColor: "#fff",
 
 	},
+    step:{
+        textAlign: "center",
+        fontWeight: "100",
+		color: "black",
+        marginRight: "10%",
+		fontSize: 30
+    },
 	topText: {
-		fontWeight: "300",
-		color: "blue",
+		fontWeight: "190",
+		color: "black",
 		textAlign: "center",
-		marginLeft: "10%",
-		marginRight: "10%",
-		fontSize: 38,
+		fontSize: 35,
 
 	},
 	button: {
 		height: 12,
-		borderRadius: 2,
+		borderRadius: 10,
 		justifyContent: "center",
 		alignItems: "center",
 		shadowRadius: 2, //IOS
-		backgroundColor: "blue",
+		backgroundColor: "#b7e4ff",
 		shadowColor: "#002560",
 		shadowOffset: { height: 6, width: 4 }, // IOS
 		shadowOpacity: .2, // IOS
@@ -85,12 +90,13 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: 15,
 		fontWeight: "400",
+        
 	},
 	featureButton: {
 		height: Dimensions.get("window").height * .1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "blue",
+		backgroundColor: "#b7e4ff",
 		marginLeft: 35,
 		marginRight: 35,
 		marginTop: 40,
@@ -98,6 +104,7 @@ const styles = StyleSheet.create({
 		shadowOffset: { height: 6, width: 4 }, // IOS
 		shadowOpacity: .1, // IOS
 		shadowRadius: 2, //IOS
+        borderRadius:5,
 		fontFamily: (Platform.OS === "ios") ? "Avenir-Medium" : "serif"
 	},
 	selectedButton: {
@@ -108,7 +115,7 @@ const styles = StyleSheet.create({
 		marginLeft: 35,
 		marginRight: 35,
 		marginTop: 40,
-		shadowColor: "blue",
+		shadowColor: "#b7e4ff",
 		shadowOffset: { height: 6, width: 4 }, // IOS
 		shadowOpacity: .1, // IOS
 		shadowRadius: 2, //IOS
@@ -119,8 +126,8 @@ const styles = StyleSheet.create({
 		marginTop: Dimensions.get("window").height * .04,
 	},
 	textFrontPage: {
-		fontSize: 17,
-		fontWeight: "400",
+		fontSize: 25,
+		fontWeight: "200",
 		color: "black",
 		fontFamily: (Platform.OS === "ios") ? "Avenir-Medium" : "serif"
 	},

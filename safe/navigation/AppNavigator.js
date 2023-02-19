@@ -10,7 +10,7 @@ class AppNavigator extends React.Component {
 		return (
 			<Stack.Navigator initialRouteName="FrontPage">
 				<Stack.Screen
-					name="FrontPage"
+					name="Xirc Bookings"
 					component={FrontPage}
 
 				/>
