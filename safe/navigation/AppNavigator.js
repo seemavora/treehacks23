@@ -13,9 +13,10 @@ class AppNavigator extends React.Component {
 					name="Xirc Bookings"
 					component={FrontPage}
 
+
 				/>
 				<Stack.Screen
-					name="Friend Invite"
+					name="FriendInvite"
 					component={FriendInvite}
 				/>
 			</Stack.Navigator>
