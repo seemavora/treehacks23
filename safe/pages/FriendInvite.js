@@ -3,14 +3,14 @@ import { View, Image, Platform, Button, Text, TouchableOpacity } from "react-nat
 import { Configuration, OpenAIApi } from "openai";
 import "react-native-url-polyfill/auto";
 const configuration = new Configuration({
-    apiKey: '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',
+    apiKey: '',
 });
 // console.log("we are here", configuration);
 export default function FriendInvite() {
     const { Configuration, OpenAIApi } = require("openai");
 
     const configuration = new Configuration({
-        apiKey: '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',
+        apiKey: '',
     });
     const openai = new OpenAIApi(configuration);
     const [result, setResult] = React.useState("");
