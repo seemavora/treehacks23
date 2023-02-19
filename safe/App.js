@@ -15,6 +15,27 @@ export default function App() {
   const [isFetching, setIsFetching] = useState(false)
   const [transcript, setTranscript] = useState('')
 
+  const recordingOptions = {
+    android: {
+      extension: '.m4a',
+      outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
+      audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AAC,
+      sampleRate: 44100,
+      numberOfChannels: 1,
+      bitRate: 128000,
+    },
+    ios: {
+      extension: '.wav',
+      audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_HIGH,
+      sampleRate: 44100,
+      numberOfChannels: 1,
+      bitRate: 128000,
+      linearPCMBitDepth: 16,
+      linearPCMIsBigEndian: false,
+      linearPCMIsFloat: false,
+    },
+  }
+
   const startRecording = async () => {
     const permission = await Audio.requestPermissionsAsync();
     await Audio.setAudioModeAsync({
@@ -23,9 +44,8 @@ export default function App() {
     })
 
     try {
-      await AudioRecorder.current.prepareToRecordAsync(
-        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
-      )
+      
+      await AudioRecorder.current.prepareToRecordAsync(recordingOptions)
 
       await AudioRecorder.current.startAsync()
       setIsRecording(true)
@@ -79,20 +99,24 @@ export default function App() {
   const getTranscription = async () => {
     setIsFetching(true)
     try {
+      // setAudioURI(audioURI.replace('file://', ''))
       const  { uri }  = await FileSystem.getInfoAsync(audioURI)
       const formData = new FormData()
+      formData.append('title','just testing')
       formData.append('file', {
-        // uri: Platform.OS === 'android' ? uri: uri.replace('file://', ''),
         uri,
         type: Platform.OS === 'ios' ? 'audio/x-wav' : 'audio/m4a',
         name: Platform.OS === 'ios' ? `${Date.now()}.wav` :`${Date.now()}.m4a`,
       })
+      console.log(JSON.stringify(formData))
 
-      const { data } = await axios.post('http://localhost:3005/speech', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }).then(res => console.log('rr'))
+      const { data } = await axios.post('https://localhost:3005/speech',formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          transformRequest: formData => formData
+      }).then(res => console.log(res, 'rr'))
       .catch(err => console.log(JSON.stringify(err), 'what'))
 
       // const {data} = await axios.post('https://localhost:3005/speech', 'itsme', {
